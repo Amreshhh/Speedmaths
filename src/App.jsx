@@ -364,6 +364,24 @@ export default function App() {
 
         </div>
 
+        <div className="w-full max-w-[1500px] mx-auto px-4 sm:px-8 pb-6 sm:pb-8">
+          <div className="glass-panel rounded-3xl border border-slate-200/80 dark:border-white/10 bg-white/85 dark:bg-black/20 shadow-2xl p-5 sm:p-7 text-slate-900 dark:text-white transition-colors duration-300">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-6">
+              <div>
+                <p className="text-[11px] uppercase tracking-[0.35em] text-yellow-500 dark:text-yellow-400 font-bold mb-2">
+                  Mobile Guide
+                </p>
+                <h2 className="text-xl sm:text-2xl font-black text-slate-950 dark:text-white">
+                  How to download this in Mobile?
+                </h2>
+              </div>
+              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl leading-relaxed">
+                Open the site in your phone browser, tap the browser menu, and choose the install or add-to-home-screen option to save it like an app.
+              </p>
+            </div>
+          </div>
+        </div>
+
         <div className="w-full max-w-[1500px] mx-auto px-4 sm:px-8 pb-12 sm:pb-16">
           <div className="glass-panel rounded-3xl border border-slate-200/80 dark:border-white/10 bg-white/85 dark:bg-black/20 shadow-2xl p-6 sm:p-8 text-slate-900 dark:text-white transition-colors duration-300">
             <div className="flex flex-col lg:flex-row lg:items-end gap-6">
