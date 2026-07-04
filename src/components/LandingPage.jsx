@@ -9,23 +9,6 @@ export default function LandingPage({ isDarkMode, setIsDarkMode }) {
           <div className="absolute top-0 right-0 w-96 h-96 bg-yellow-500/5 rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
           
-          <div className="absolute top-4 left-4 right-4 z-20 overflow-hidden rounded-[28px] border border-white/10 bg-slate-950/70 backdrop-blur-xl shadow-[0_20px_70px_rgba(0,0,0,0.45)]">
-            <div className="relative px-4 py-3 sm:px-6 sm:py-4">
-              <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 via-transparent to-yellow-400/10"></div>
-              <div className="absolute inset-x-6 bottom-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-              <h2 className="relative z-10 flex items-center justify-center gap-2 text-center text-[clamp(0.95rem,1.25vw,1.45rem)] font-black leading-none tracking-[0.24em] whitespace-nowrap">
-                {Array.from('Meri Aatma Tujhe Humesha Satayegi').map((char, index) => (
-                  <span
-                    key={`${char}-${index}`}
-                    className={/[A-Z]/.test(char) ? 'text-red-500 drop-shadow-[0_0_10px_rgba(239,68,68,0.28)]' : 'text-amber-100'}
-                  >
-                    {char}
-                  </span>
-                ))}
-              </h2>
-            </div>
-          </div>
-
           <div className="text-center md:text-left max-w-lg relative z-10 pt-32 sm:pt-36 md:pt-28">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 tracking-tight leading-tight">
               Speed<span className="bg-gradient-to-r from-yellow-400 to-yellow-300 bg-clip-text text-transparent">maths</span>
