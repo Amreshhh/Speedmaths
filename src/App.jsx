@@ -6,7 +6,7 @@ import SessionEndModal from './components/SessionEndModal';
 import LandingPage from './components/LandingPage';
 
 export default function App() {
-  // Landing page state - removed, now showing both
+  // Landing  page state - removed, now showing both
   const [showGameOnly, setShowGameOnly] = useState(false);
   const [min, setMin] = useState(1);
   const [max, setMax] = useState(100);
