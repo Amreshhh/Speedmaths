@@ -15,6 +15,14 @@ export default function App() {
   const [operation, setOperation] = useState('square');
   const [complementBase, setComplementBase] = useState(100);
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const [feedbackText, setFeedbackText] = useState('');
+  const suggestionEmail = import.meta.env.VITE_SUGGESTION_EMAIL || '';
+  const feedbackEndpoint = suggestionEmail
+    ? `https://formsubmit.co/${encodeURIComponent(suggestionEmail)}`
+    : '';
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [settingsKeyRight, setSettingsKeyRight] = useState('r');
+  const [settingsKeyWrong, setSettingsKeyWrong] = useState('w');
 
   // Game States
   const [numberOne, setNumberOne] = useState(null);
@@ -34,6 +42,13 @@ export default function App() {
   // Custom Controls for Speed Mode
   const [keyRight, setKeyRight] = useState('r');
   const [keyWrong, setKeyWrong] = useState('w');
+
+  useEffect(() => {
+    if (settingsOpen) {
+      setSettingsKeyRight(keyRight);
+      setSettingsKeyWrong(keyWrong);
+    }
+  }, [settingsOpen, keyRight, keyWrong]);
 
   // Timer Refs
   const countdownIntervalRef = useRef(null);
@@ -198,6 +213,28 @@ export default function App() {
     }
   };
 
+  const sanitizeSingleKey = (value, fallback) => {
+    const trimmed = value.trim();
+    if (!trimmed) return fallback;
+    return trimmed.slice(0, 1).toLowerCase();
+  };
+
+  const handleSaveKeyBindings = () => {
+    setKeyRight(sanitizeSingleKey(settingsKeyRight, 'r'));
+    setKeyWrong(sanitizeSingleKey(settingsKeyWrong, 'w'));
+    setSettingsOpen(false);
+  };
+
+  const handleFeedbackSubmit = (event) => {
+    const trimmedFeedback = feedbackText.trim();
+    if (!trimmedFeedback || !suggestionEmail) {
+      event.preventDefault();
+      return;
+    }
+
+    window.setTimeout(() => setFeedbackText(''), 0);
+  };
+
   return (
     <div className={isDarkMode ? 'dark' : ''}>
       <style>{`
@@ -252,18 +289,13 @@ export default function App() {
           delay={delay} setDelay={setDelay}
           sessionTime={sessionTime} setSessionTime={setSessionTime}
           thinkTime={thinkTime} setThinkTime={setThinkTime}
-          keyRight={keyRight} setKeyRight={setKeyRight}
-          keyWrong={keyWrong} setKeyWrong={setKeyWrong}
           complementBase={complementBase} setComplementBase={setComplementBase}
           isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode}
           speedState={speedState}
           onGenerateClick={generateNumber}
           onStartSession={startSession}
           onStopSession={endSession}
-          onHome={() => {
-            const landingSection = document.querySelector('div > div > div:first-child');
-            landingSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }}
+          onOpenSettings={() => setSettingsOpen(true)}
         />
 
         {/* Global Progress Timer for Speed mode */}
@@ -329,6 +361,120 @@ export default function App() {
           />
 
         </div>
+
+        <div className="w-full max-w-[1500px] mx-auto px-4 sm:px-8 pb-12 sm:pb-16">
+          <div className="glass-panel rounded-3xl border border-slate-200/80 dark:border-white/10 bg-white/85 dark:bg-black/20 shadow-2xl p-6 sm:p-8 text-slate-900 dark:text-white transition-colors duration-300">
+            <div className="flex flex-col lg:flex-row lg:items-end gap-6">
+              <div className="flex-1">
+                
+                <h2 className="text-2xl sm:text-3xl font-black text-slate-950 dark:text-white mb-3">
+                  Suggest a new mode
+                </h2>
+                <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl leading-relaxed">
+                  If you want a different practice mode, type it here and I’ll shape the next update around it.
+                </p>
+              </div>
+
+              <form onSubmit={handleFeedbackSubmit} action={feedbackEndpoint} method="POST" target="feedback-submission-frame" className="flex-1">
+                <input type="hidden" name="_subject" value="Speedmaths suggestion" />
+                <input type="hidden" name="_captcha" value="false" />
+                <input type="hidden" name="_template" value="box" />
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
+                  What should we add?
+                </label>
+                <textarea
+                  name="suggestion"
+                  value={feedbackText}
+                  onChange={(e) => setFeedbackText(e.target.value)}
+                  placeholder="Example: fraction mode, multiplication sprint, daily challenge..."
+                  className="w-full min-h-[112px] rounded-2xl bg-white dark:bg-slate-900/80 text-slate-950 dark:text-white border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:ring-2 focus:ring-yellow-400 resize-none placeholder:text-slate-400 shadow-sm"
+                />
+                <div className="mt-3 flex flex-wrap items-center gap-3">
+                  <button
+                    type="submit"
+                    className="px-5 py-2.5 bg-yellow-400 hover:bg-yellow-500 text-black font-bold rounded-xl shadow-lg shadow-yellow-400/20 transition-all active:scale-95 text-sm"
+                  >
+                    Send suggestion via email
+                  </button>
+                </div>
+              </form>
+              <iframe title="feedback-submission-frame" name="feedback-submission-frame" className="hidden" />
+            </div>
+          </div>
+        </div>
+
+        {settingsOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setSettingsOpen(false)} />
+            <div className="relative w-full max-w-md rounded-3xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-slate-950 shadow-2xl p-6 sm:p-7 text-slate-900 dark:text-white">
+              <div className="flex items-start justify-between gap-4 mb-6">
+                <div>
+                  <p className="text-[11px] uppercase tracking-[0.35em] text-yellow-500 dark:text-yellow-400 font-bold mb-2">Settings</p>
+                  <h3 className="text-2xl font-black">Speed mode keys</h3>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setSettingsOpen(false)}
+                  className="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                  aria-label="Close settings"
+                >
+                  ×
+                </button>
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
+                    Correct key
+                  </label>
+                  <input
+                    type="text"
+                    maxLength={1}
+                    value={settingsKeyRight.toUpperCase()}
+                    onChange={(e) => setSettingsKeyRight(e.target.value)}
+                    className="w-full px-4 py-3 rounded-2xl bg-white dark:bg-slate-900 text-slate-950 dark:text-white border border-slate-300 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-bold uppercase"
+                    placeholder="R"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
+                    Incorrect key
+                  </label>
+                  <input
+                    type="text"
+                    maxLength={1}
+                    value={settingsKeyWrong.toUpperCase()}
+                    onChange={(e) => setSettingsKeyWrong(e.target.value)}
+                    className="w-full px-4 py-3 rounded-2xl bg-white dark:bg-slate-900 text-slate-950 dark:text-white border border-slate-300 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-bold uppercase"
+                    placeholder="W"
+                  />
+                </div>
+
+                <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                  These keys are used only in Speed mode. Enter any single character you want.
+                </p>
+              </div>
+
+              <div className="mt-6 flex items-center justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={() => setSettingsOpen(false)}
+                  className="px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold text-sm"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={handleSaveKeyBindings}
+                  className="px-5 py-2.5 rounded-xl bg-yellow-400 hover:bg-yellow-500 text-black font-bold text-sm shadow-lg shadow-yellow-400/20 transition-all active:scale-95"
+                >
+                  Save keys
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
       </div>
       </div>
