@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import GameHeader from './components/GameHeader';
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from '@vercel/analytics/react';
 import NumberDisplay from './components/NumberDisplay';
 import AnswerDisplay from './components/AnswerDisplay';
 import SessionEndModal from './components/SessionEndModal';
@@ -504,6 +504,7 @@ export default function App() {
 
       </div>
       </div>
+      <Analytics />
     </div>
   );
 }
