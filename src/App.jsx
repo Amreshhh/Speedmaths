@@ -3,8 +3,11 @@ import GameHeader from './components/GameHeader';
 import NumberDisplay from './components/NumberDisplay';
 import AnswerDisplay from './components/AnswerDisplay';
 import SessionEndModal from './components/SessionEndModal';
+import LandingPage from './components/LandingPage';
 
 export default function App() {
+  // Landing page state - removed, now showing both
+  const [showGameOnly, setShowGameOnly] = useState(false);
   const [min, setMin] = useState(1);
   const [max, setMax] = useState(100);
   const [mode, setMode] = useState('manual');
@@ -267,8 +270,15 @@ export default function App() {
       `}</style>
 
       {/* Full-page scrollable container */}
-      <div className="w-full min-h-screen overflow-x-hidden overflow-y-auto bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 dark:from-black dark:via-slate-950 dark:to-slate-900 flex flex-col font-sans text-white transition-colors duration-500 relative">
-        <div id="game-section" className="w-full min-h-screen flex flex-col">
+      <div className="w-full overflow-y-auto">
+        
+        {/* Landing Page Section - Full Height */}
+        <div className="w-full min-h-screen">
+          <LandingPage isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
+        </div>
+
+        {/* Game Section - Full Height */}
+        <div id="game-section" className="w-full min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 dark:from-black dark:via-slate-950 dark:to-slate-900 flex flex-col font-sans text-white transition-colors duration-500 relative overflow-x-hidden">
         
         {/* Header */}
         <GameHeader
@@ -299,7 +309,7 @@ export default function App() {
         )}
 
         {/* Main Content Area */}
-        <div className="flex-1 flex flex-col md:flex-row p-3 sm:p-6 gap-3 sm:gap-6 max-w-[1500px] w-full mx-auto relative justify-center items-stretch mt-3 sm:mt-4">
+        <div className="flex-1 flex flex-col md:flex-row p-4 sm:p-8 gap-4 sm:gap-8 max-w-[1500px] w-full mx-auto relative justify-center items-stretch mt-4">
           
           {/* Session End Modal */}
           {speedState === 'ended' && (
@@ -352,7 +362,7 @@ export default function App() {
 
         </div>
 
-        <div className="w-full max-w-[1500px] mx-auto px-3 sm:px-6 pb-10 sm:pb-16">
+        <div className="w-full max-w-[1500px] mx-auto px-4 sm:px-8 pb-12 sm:pb-16">
           <div className="glass-panel rounded-3xl border border-slate-200/80 dark:border-white/10 bg-white/85 dark:bg-black/20 shadow-2xl p-6 sm:p-8 text-slate-900 dark:text-white transition-colors duration-300">
             <div className="flex flex-col lg:flex-row lg:items-end gap-6">
               <div className="flex-1">
@@ -466,7 +476,7 @@ export default function App() {
           </div>
         )}
 
-        </div>
+      </div>
       </div>
     </div>
   );
