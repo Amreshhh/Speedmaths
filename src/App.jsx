@@ -308,7 +308,7 @@ export default function App() {
           </div>
         )}
 
-        {/* Main Content Area */}
+        {/* Main  Content Area */}
         <div className="flex-1 flex flex-col md:flex-row p-3 sm:p-8 gap-3 sm:gap-8 max-w-[1500px] w-full mx-auto relative justify-center items-stretch mt-3 sm:mt-4">
           
           {/* Session End Modal */}
