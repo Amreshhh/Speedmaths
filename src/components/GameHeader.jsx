@@ -17,9 +17,9 @@ export default function GameHeader({
   onOpenSettings
 }) {
   return (
-    <div className="glass-panel sticky top-0 shadow-xl p-4 sm:p-5 z-20 transition-all duration-300">
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-5">
-        <div className="flex flex-wrap items-end gap-3 justify-center w-full lg:w-auto">
+    <div className="glass-panel sticky top-0 shadow-xl p-3 sm:p-5 z-20 transition-all duration-300">
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-3 sm:gap-5">
+        <div className="flex flex-wrap items-end gap-2 sm:gap-3 justify-center w-full lg:w-auto">
           <div className="flex gap-2">
             <div className="flex flex-col">
               <span className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 tracking-wider uppercase mb-1">Min</span>
@@ -174,7 +174,7 @@ export default function GameHeader({
               </button>
             )
           ) : (
-            <button onClick={onGenerateClick} className="px-5 py-2.5 bg-yellow-400 hover:bg-yellow-500 text-black font-bold rounded-xl shadow-lg shadow-yellow-400/20 transition-all active:scale-95 text-sm">
+            <button onClick={onGenerateClick} className="hidden sm:inline-flex px-5 py-2.5 bg-yellow-400 hover:bg-yellow-500 text-black font-bold rounded-xl shadow-lg shadow-yellow-400/20 transition-all active:scale-95 text-sm">
               Generate
             </button>
           )}

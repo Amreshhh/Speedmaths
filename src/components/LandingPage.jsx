@@ -5,21 +5,21 @@ export default function LandingPage({ isDarkMode, setIsDarkMode }) {
     <div className={isDarkMode ? 'dark' : ''}>
       <div className="min-h-screen bg-white dark:bg-slate-950 flex items-stretch overflow-hidden transition-colors duration-500">
         {/* Left Section: Branding */}
-        <div className="w-full md:w-1/2 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 dark:from-black dark:via-slate-950 dark:to-slate-900 flex flex-col items-center justify-center px-8 md:px-12 py-16 md:py-0 relative overflow-hidden">
+        <div className="w-full md:w-1/2 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 dark:from-black dark:via-slate-950 dark:to-slate-900 flex flex-col items-center justify-center px-5 sm:px-8 md:px-12 py-12 sm:py-16 md:py-0 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-96 h-96 bg-yellow-500/5 rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
           
-          <div className="text-center md:text-left max-w-lg relative z-10 pt-32 sm:pt-36 md:pt-28">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 tracking-tight leading-tight">
+          <div className="text-center md:text-left max-w-lg relative z-10 pt-24 sm:pt-28 md:pt-28">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-3 sm:mb-4 tracking-tight leading-tight">
               Speed<span className="bg-gradient-to-r from-yellow-400 to-yellow-300 bg-clip-text text-transparent">maths</span>
             </h1>
-            <p className="text-lg md:text-xl text-slate-300 font-light mb-12 leading-relaxed">
+            <p className="text-sm sm:text-lg md:text-xl text-slate-300 font-light mb-8 sm:mb-12 leading-relaxed max-w-md">
               Master mental arithmetic with precision and speed
             </p>
             
             <button
               onClick={() => setIsDarkMode(!isDarkMode)}
-              className="inline-flex items-center justify-center gap-3 px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-medium rounded-lg transition-all border border-white/20 backdrop-blur-sm"
+              className="inline-flex items-center justify-center gap-2.5 sm:gap-3 px-5 sm:px-6 py-2.5 sm:py-3 bg-white/10 hover:bg-white/20 text-white font-medium rounded-lg transition-all border border-white/20 backdrop-blur-sm text-sm sm:text-base"
             >
               {isDarkMode ? (
                 <>

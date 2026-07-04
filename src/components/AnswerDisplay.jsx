@@ -4,16 +4,16 @@ export default function AnswerDisplay({
   numberOne, numberTwo, operation, isRevealed, gradePhase, mode, speedState,
   complementBase, activeCountdown, thinkTime, delay,
   keyRight, keyWrong,
-  onReveal, onMarkCorrect, onMarkIncorrect, getRightBoxAnswer
+  onReveal, onMarkCorrect, onMarkIncorrect, getRightBoxAnswer, onGenerateClick, showMobileGenerateButton
 }) {
   return (
-    <div className={`flex-1 rounded-3xl shadow-2xl flex flex-col items-center justify-center p-8 relative transition-all duration-500 min-h-[40vh] md:min-h-[50vh] border
+    <div className={`flex-1 rounded-3xl shadow-2xl flex flex-col items-center justify-center p-5 sm:p-8 relative transition-all duration-500 min-h-[30vh] sm:min-h-[36vh] md:min-h-[50vh] border
       ${isRevealed 
         ? 'bg-yellow-400/5 dark:bg-yellow-400/10 border-yellow-400/20 shadow-yellow-400/5' 
         : 'glass-panel border-zinc-200 dark:border-zinc-700 border-dashed'}`}
     >
       {/* Top Indicator */}
-      <div className={`absolute top-6 left-6 font-bold tracking-wider uppercase text-[11px] transition-colors duration-300
+      <div className={`absolute top-4 sm:top-6 left-4 sm:left-6 font-bold tracking-wider uppercase text-[10px] sm:text-[11px] transition-colors duration-300
         ${isRevealed ? 'text-yellow-600 dark:text-yellow-400' : 'text-zinc-400 dark:text-zinc-500'}`}>
         {operation === 'multiply' ? 'The Product' : 
          operation === 'add' ? 'The Sum' : 
@@ -28,8 +28,8 @@ export default function AnswerDisplay({
           <div className="flex flex-col items-center">
             <div className={`font-black text-yellow-600 dark:text-yellow-400 leading-tight text-center whitespace-nowrap tracking-tighter animate-in zoom-in spin-in-1 duration-300 ${
               ['multiply', 'add', 'sub'].includes(operation) 
-                ? 'text-[3rem] sm:text-[4.5rem] md:text-[3.5rem] lg:text-[4.5rem] xl:text-[6rem]' 
-                : 'text-[4rem] sm:text-[6rem] md:text-[5rem] lg:text-[7rem] xl:text-[8rem]'
+                ? 'text-[2.35rem] sm:text-[4.5rem] md:text-[3.5rem] lg:text-[4.5rem] xl:text-[6rem]' 
+                : 'text-[3.15rem] sm:text-[6rem] md:text-[5rem] lg:text-[7rem] xl:text-[8rem]'
             }`}>
               {getRightBoxAnswer()}
             </div>
@@ -43,16 +43,16 @@ export default function AnswerDisplay({
             {/* SPEED SESSION: Evaluation Actions */}
             {mode === 'speed' && gradePhase && (
               <div className="mt-8 flex flex-col items-center gap-4 animate-in slide-in-from-bottom-2 duration-300">
-                <div className="flex gap-3">
+                <div className="flex gap-2 sm:gap-3 flex-wrap justify-center">
                   <button 
                     onClick={onMarkCorrect}
-                    className="bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-900/40 active:scale-95 px-5 py-3 rounded-2xl font-black flex items-center gap-2 border border-green-300/50 dark:border-green-700/50 transition-all text-sm uppercase"
+                    className="bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-900/40 active:scale-95 px-4 sm:px-5 py-2.5 sm:py-3 rounded-2xl font-black flex items-center gap-2 border border-green-300/50 dark:border-green-700/50 transition-all text-xs sm:text-sm uppercase"
                   >
                     <kbd className="bg-green-500 text-white px-2 py-0.5 rounded text-xs shadow-sm font-black uppercase">{keyRight}</kbd> Correct
                   </button>
                   <button 
                     onClick={onMarkIncorrect}
-                    className="bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/40 active:scale-95 px-5 py-3 rounded-2xl font-black flex items-center gap-2 border border-red-300/50 dark:border-red-700/50 transition-all text-sm uppercase"
+                    className="bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/40 active:scale-95 px-4 sm:px-5 py-2.5 sm:py-3 rounded-2xl font-black flex items-center gap-2 border border-red-300/50 dark:border-red-700/50 transition-all text-xs sm:text-sm uppercase"
                   >
                     <kbd className="bg-red-500 text-white px-2 py-0.5 rounded text-xs shadow-sm font-black uppercase">{keyWrong}</kbd> Incorrect
                   </button>
@@ -80,7 +80,7 @@ export default function AnswerDisplay({
                 {/* Touch Friendly Reveal Button */}
                 <button 
                   onClick={onReveal}
-                  className="px-6 py-2.5 bg-yellow-400 text-black font-bold rounded-2xl border border-yellow-500 active:scale-95 transition-all text-sm shadow-lg shadow-yellow-400/20 uppercase tracking-wide"
+                  className="px-5 sm:px-6 py-2.5 bg-yellow-400 text-black font-bold rounded-2xl border border-yellow-500 active:scale-95 transition-all text-xs sm:text-sm shadow-lg shadow-yellow-400/20 uppercase tracking-wide"
                 >
                   Reveal Answer
                 </button>
@@ -99,7 +99,7 @@ export default function AnswerDisplay({
                 )}
               </div>
             ) : (
-              <div className="flex items-center gap-3 bg-zinc-200/50 dark:bg-zinc-800/50 text-zinc-600 dark:text-zinc-400 px-5 py-3 rounded-2xl font-bold text-sm border border-zinc-300/50 dark:border-zinc-700/50 shadow-inner uppercase tracking-wider">
+              <div className="flex items-center gap-3 bg-zinc-200/50 dark:bg-zinc-800/50 text-zinc-600 dark:text-zinc-400 px-4 sm:px-5 py-2.5 sm:py-3 rounded-2xl font-bold text-xs sm:text-sm border border-zinc-300/50 dark:border-zinc-700/50 shadow-inner uppercase tracking-wider">
                 <svg className="animate-spin h-4.5 w-4.5 text-yellow-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -113,6 +113,17 @@ export default function AnswerDisplay({
         /* EMPTY UNINITIALIZED STATE */
         <div className="text-lg text-zinc-300 dark:text-zinc-700 font-bold italic text-center uppercase tracking-widest">
           Awaiting first question...
+        </div>
+      )}
+
+      {showMobileGenerateButton && onGenerateClick && (
+        <div className="mt-4 w-full sm:hidden">
+          <button
+            onClick={onGenerateClick}
+            className="w-full px-5 py-3 bg-yellow-400 hover:bg-yellow-500 text-black font-black rounded-2xl shadow-lg shadow-yellow-400/20 transition-all active:scale-95 text-sm uppercase tracking-wider"
+          >
+            Generate
+          </button>
         </div>
       )}
     </div>
