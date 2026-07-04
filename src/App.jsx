@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import GameHeader from './components/GameHeader';
+import { Analytics } from "@vercel/analytics/next"
 import NumberDisplay from './components/NumberDisplay';
 import AnswerDisplay from './components/AnswerDisplay';
 import SessionEndModal from './components/SessionEndModal';
