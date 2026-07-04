@@ -15,6 +15,7 @@ export default function LandingPage({ isDarkMode, setIsDarkMode }) {
             </h1>
             <p className="text-sm sm:text-lg md:text-xl text-slate-300 font-light mb-7 sm:mb-12 leading-relaxed max-w-sm sm:max-w-md mx-auto md:mx-0">
               Master mental arithmetic with precision and speed
+              Daily 30 minutes reduce the brain-fat
             </p>
             
             <button
