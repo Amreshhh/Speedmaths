@@ -14,8 +14,7 @@ export default function LandingPage({ isDarkMode, setIsDarkMode }) {
               Speed<span className="bg-gradient-to-r from-yellow-400 to-yellow-300 bg-clip-text text-transparent">maths</span>
             </h1>
             <p className="text-sm sm:text-lg md:text-xl text-slate-300 font-light mb-7 sm:mb-12 leading-relaxed max-w-sm sm:max-w-md mx-auto md:mx-0">
-              Master mental arithmetic with precision and speed
-              Daily 30 minutes reduce the brain-fat
+              Daily 30 minutes speed maths reduce the brain-fat
             </p>
             
             <button
