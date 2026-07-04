@@ -375,9 +375,14 @@ export default function App() {
                   How to download this in Mobile?
                 </h2>
               </div>
-              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl leading-relaxed">
-                Open the site in your phone browser, tap the browser menu, and choose the install or add-to-home-screen option to save it like an app.
-              </p>
+              <a
+                href="https://www.youtube.com/shorts/to8PFEoQsqM"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center px-5 py-3 rounded-2xl bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 font-bold text-sm sm:text-base shadow-lg shadow-black/10 transition-all hover:scale-[1.01] active:scale-[0.99]"
+              >
+                Open mobile install guide
+              </a>
             </div>
           </div>
         </div>
