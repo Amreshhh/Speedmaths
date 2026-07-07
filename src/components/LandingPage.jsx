@@ -37,6 +37,18 @@ export default function LandingPage({ isDarkMode, setIsDarkMode }) {
                 </>
               )}
             </button>
+
+            <a
+              href="https://www.youtube.com/shorts/to8PFEoQsqM"
+              target="_blank"
+              rel="noreferrer"
+              className="mt-3 sm:mt-4 inline-flex w-full sm:w-auto items-center justify-center gap-2.5 sm:gap-3 px-5 sm:px-6 py-2.5 sm:py-3 bg-white/10 hover:bg-white/20 text-white font-medium rounded-lg transition-all border border-white/20 backdrop-blur-sm text-sm sm:text-base"
+            >
+              <svg className="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
+              </svg>
+              <span>Mobile Install Guide</span>
+            </a>
           </div>
         </div>
 
