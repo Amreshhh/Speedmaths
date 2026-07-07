@@ -3,12 +3,16 @@ import React from 'react';
 export default function GameHeader({
   min, setMin,
   max, setMax,
+  min2, setMin2,
+  max2, setMax2,
+  useDifferentRange, setUseDifferentRange,
   mode, handleModeChange,
   operation, setOperation,
   delay, setDelay,
   sessionTime, setSessionTime,
   thinkTime, setThinkTime,
   complementBase, setComplementBase,
+  timesNValue, setTimesNValue,
   isDarkMode, setIsDarkMode,
   speedState,
   onGenerateClick,
@@ -16,6 +20,8 @@ export default function GameHeader({
   onStopSession,
   onOpenSettings
 }) {
+  const isBinaryOp = ['multiply', 'add', 'sub', 'divide'].includes(operation);
+
   return (
     <div className="glass-panel sticky top-0 shadow-xl p-3 sm:p-5 z-20 transition-all duration-300">
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-3 sm:gap-5">
@@ -43,6 +49,60 @@ export default function GameHeader({
             </div>
           </div>
 
+          {isBinaryOp && (
+            <>
+              <div className="w-px h-8 bg-zinc-300 dark:bg-zinc-700 hidden sm:block mx-1"></div>
+
+              <div className="flex flex-col">
+                <span className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 tracking-wider uppercase mb-1">Range</span>
+                <div className="flex rounded-xl overflow-hidden p-1 dark-input gap-0.5">
+                  {[
+                    { id: false, label: 'Same' },
+                    { id: true, label: 'Different' }
+                  ].map((opt) => (
+                    <button
+                      key={String(opt.id)}
+                      type="button"
+                      onClick={() => setUseDifferentRange(opt.id)}
+                      disabled={speedState === 'playing'}
+                      className={`px-3 py-1 text-xs font-bold rounded-lg whitespace-nowrap transition-all duration-200 disabled:opacity-40
+                        ${useDifferentRange === opt.id
+                          ? 'bg-yellow-400 text-black shadow-md'
+                          : 'text-zinc-600 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-800'}`}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {useDifferentRange && (
+                <div className="flex gap-2 animate-in fade-in slide-in-from-top-1 duration-200">
+                  <div className="flex flex-col">
+                    <span className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 tracking-wider uppercase mb-1">Min 2</span>
+                    <input
+                      type="number"
+                      value={min2}
+                      onChange={(e) => setMin2(e.target.value)}
+                      disabled={speedState === 'playing'}
+                      className="w-16 sm:w-20 px-3 py-1.5 dark-input rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-400 text-slate-900 dark:text-white transition-all text-sm font-bold disabled:opacity-40"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 tracking-wider uppercase mb-1">Max 2</span>
+                    <input
+                      type="number"
+                      value={max2}
+                      onChange={(e) => setMax2(e.target.value)}
+                      disabled={speedState === 'playing'}
+                      className="w-16 sm:w-20 px-3 py-1.5 dark-input rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-400 text-slate-900 dark:text-white transition-all text-sm font-bold disabled:opacity-40"
+                    />
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+
           <div className="w-px h-8 bg-zinc-300 dark:bg-zinc-700 hidden sm:block mx-1"></div>
 
           <div className="flex flex-col max-w-full">
@@ -51,9 +111,14 @@ export default function GameHeader({
               {[
                 { id: 'square', label: 'x²' },
                 { id: 'sqrt', label: '√x' },
+                { id: 'cube', label: 'x³' },
+                { id: 'cuberoot', label: '∛x' },
                 { id: 'add', label: '+' },
                 { id: 'sub', label: '−' },
                 { id: 'multiply', label: '×' },
+                { id: 'divide', label: '÷' },
+                { id: 'times11', label: '×11' },
+                { id: 'timesn', label: '×n' },
                 { id: 'complement', label: 'Comp' }
               ].map((op) => (
                 <button
@@ -156,6 +221,19 @@ export default function GameHeader({
                 value={complementBase}
                 disabled={speedState === 'playing'}
                 onChange={(e) => setComplementBase(e.target.value)}
+                className="w-16 px-2.5 py-1.5 dark-input rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-400 text-sm font-bold text-slate-900 dark:text-white disabled:opacity-40"
+              />
+            </div>
+          )}
+
+          {operation === 'timesn' && (
+            <div className="flex flex-col animate-in fade-in slide-in-from-top-1 duration-200">
+              <span className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 tracking-wider uppercase mb-1">Multiplier (n)</span>
+              <input
+                type="number"
+                value={timesNValue}
+                disabled={speedState === 'playing'}
+                onChange={(e) => setTimesNValue(e.target.value)}
                 className="w-16 px-2.5 py-1.5 dark-input rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-400 text-sm font-bold text-slate-900 dark:text-white disabled:opacity-40"
               />
             </div>

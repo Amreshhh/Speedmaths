@@ -21,15 +21,15 @@ export default function NumberDisplay({ numberOne, numberTwo, operation, mode, s
       
       {numberOne !== null ? (
         <div className={`font-black text-black dark:text-white leading-tight text-center whitespace-nowrap tracking-tighter ${
-          ['multiply', 'add', 'sub'].includes(operation) 
+          ['multiply', 'add', 'sub', 'divide'].includes(operation) 
             ? 'text-[2.35rem] sm:text-[4.5rem] md:text-[3.5rem] lg:text-[4.5rem] xl:text-[6rem]' 
             : 'text-[3.15rem] sm:text-[6rem] md:text-[5rem] lg:text-[7rem] xl:text-[8rem]'
         }`}>
-          {['multiply', 'add', 'sub'].includes(operation) ? (
+          {['multiply', 'add', 'sub', 'divide'].includes(operation) ? (
             <span>
               {numberOne} 
               <span className="text-zinc-400 dark:text-zinc-600 mx-2 sm:mx-3 font-light">
-                {operation === 'multiply' ? '×' : operation === 'add' ? '+' : '−'}
+                {operation === 'multiply' ? '×' : operation === 'add' ? '+' : operation === 'sub' ? '−' : '÷'}
               </span> 
               {numberTwo}
             </span>

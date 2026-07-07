@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function AnswerDisplay({
   numberOne, numberTwo, operation, isRevealed, gradePhase, mode, speedState,
-  complementBase, activeCountdown, thinkTime, delay,
+  complementBase, timesNValue, activeCountdown, thinkTime, delay,
   keyRight, keyWrong,
   onReveal, onMarkCorrect, onMarkIncorrect, getRightBoxAnswer, onGenerateClick, showMobileGenerateButton
 }) {
@@ -15,10 +15,15 @@ export default function AnswerDisplay({
       {/* Top Indicator */}
       <div className={`absolute top-4 sm:top-6 left-4 sm:left-6 font-bold tracking-wider uppercase text-[10px] sm:text-[11px] transition-colors duration-300
         ${isRevealed ? 'text-yellow-600 dark:text-yellow-400' : 'text-zinc-400 dark:text-zinc-500'}`}>
-        {operation === 'multiply' ? 'The Product' : 
-         operation === 'add' ? 'The Sum' : 
-         operation === 'sub' ? 'The Difference' : 
-         operation === 'sqrt' ? 'The Square Root' : 
+        {operation === 'multiply' ? 'The Product' :
+         operation === 'add' ? 'The Sum' :
+         operation === 'sub' ? 'The Difference' :
+         operation === 'divide' ? 'The Quotient' :
+         operation === 'sqrt' ? 'The Square Root' :
+         operation === 'cube' ? 'The Cube' :
+         operation === 'cuberoot' ? 'The Cube Root' :
+         operation === 'times11' ? 'The ×11 Product' :
+         operation === 'timesn' ? `The ×${timesNValue} Product` :
          operation === 'complement' ? 'The Complement' : 'The Square'}
       </div>
 
@@ -27,14 +32,14 @@ export default function AnswerDisplay({
           /* REVEALED ANSWER PANEL */
           <div className="flex flex-col items-center">
             <div className={`font-black text-yellow-600 dark:text-yellow-400 leading-tight text-center whitespace-nowrap tracking-tighter animate-in zoom-in spin-in-1 duration-300 ${
-              ['multiply', 'add', 'sub'].includes(operation) 
+              ['multiply', 'add', 'sub', 'divide'].includes(operation) 
                 ? 'text-[2.35rem] sm:text-[4.5rem] md:text-[3.5rem] lg:text-[4.5rem] xl:text-[6rem]' 
                 : 'text-[3.15rem] sm:text-[6rem] md:text-[5rem] lg:text-[7rem] xl:text-[8rem]'
             }`}>
               {getRightBoxAnswer()}
             </div>
 
-            {operation === 'sqrt' && (
+            {(operation === 'sqrt' || operation === 'cuberoot' || operation === 'divide') && (
               <div className="text-xs text-yellow-600/60 dark:text-yellow-400/60 font-bold mt-3 animate-in fade-in duration-300 uppercase tracking-widest">
                 (rounded up to three digits)
               </div>

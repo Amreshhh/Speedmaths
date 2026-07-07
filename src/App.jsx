@@ -11,10 +11,14 @@ export default function App() {
   const [showGameOnly, setShowGameOnly] = useState(false);
   const [min, setMin] = useState(1);
   const [max, setMax] = useState(100);
+  const [min2, setMin2] = useState(1);
+  const [max2, setMax2] = useState(100);
+  const [useDifferentRange, setUseDifferentRange] = useState(false);
   const [mode, setMode] = useState('manual');
   const [delay, setDelay] = useState(3);
   const [operation, setOperation] = useState('square');
   const [complementBase, setComplementBase] = useState(100);
+  const [timesNValue, setTimesNValue] = useState(2);
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [feedbackText, setFeedbackText] = useState('');
   const suggestionEmail = import.meta.env.VITE_SUGGESTION_EMAIL || '';
@@ -63,11 +67,32 @@ export default function App() {
 
     const actualMin = Math.min(Number(min), Number(max));
     const actualMax = Math.max(Number(min), Number(max));
-    const getRand = () => Math.floor(Math.random() * (actualMax - actualMin + 1)) + actualMin;
-    
-    setNumberOne(getRand());
-    setNumberTwo(['multiply', 'add', 'sub'].includes(operation) ? getRand() : null);
-    
+    const getRand = (mn, mx) => Math.floor(Math.random() * (mx - mn + 1)) + mn;
+
+    setNumberOne(getRand(actualMin, actualMax));
+
+    if (['multiply', 'add', 'sub', 'divide'].includes(operation)) {
+      let secondMin = actualMin;
+      let secondMax = actualMax;
+      if (useDifferentRange) {
+        secondMin = Math.min(Number(min2), Number(max2));
+        secondMax = Math.max(Number(min2), Number(max2));
+      }
+
+      let numTwo = getRand(secondMin, secondMax);
+      if (operation === 'divide') {
+        let attempts = 0;
+        while (numTwo === 0 && attempts < 20) {
+          numTwo = getRand(secondMin, secondMax);
+          attempts++;
+        }
+        if (numTwo === 0) numTwo = 1;
+      }
+      setNumberTwo(numTwo);
+    } else {
+      setNumberTwo(null);
+    }
+
     setIsRevealed(false);
     setGradePhase(false);
     setActiveCountdown(null);
@@ -86,7 +111,7 @@ export default function App() {
         });
       }, 1000);
     }
-  }, [min, max, mode, delay, operation]);
+  }, [min, max, min2, max2, useDifferentRange, mode, delay, operation]);
 
   // Handle mode changes
   const handleModeChange = (newMode) => {
@@ -206,9 +231,14 @@ export default function App() {
     switch (operation) {
       case 'square': return numberOne ** 2;
       case 'sqrt': return Math.sqrt(numberOne).toFixed(3);
+      case 'cube': return numberOne ** 3;
+      case 'cuberoot': return Math.cbrt(numberOne).toFixed(3);
+      case 'times11': return numberOne * 11;
+      case 'timesn': return numberOne * Number(timesNValue);
       case 'add': return numberOne + numberTwo;
       case 'sub': return numberOne - numberTwo;
       case 'multiply': return numberOne * numberTwo;
+      case 'divide': return numberTwo ? (numberOne / numberTwo).toFixed(3) : '0.000';
       case 'complement': return Number(complementBase) - numberOne;
       default: return '';
     }
@@ -285,12 +315,16 @@ export default function App() {
         <GameHeader
           min={min} setMin={setMin}
           max={max} setMax={setMax}
+          min2={min2} setMin2={setMin2}
+          max2={max2} setMax2={setMax2}
+          useDifferentRange={useDifferentRange} setUseDifferentRange={setUseDifferentRange}
           mode={mode} handleModeChange={handleModeChange}
           operation={operation} setOperation={setOperation}
           delay={delay} setDelay={setDelay}
           sessionTime={sessionTime} setSessionTime={setSessionTime}
           thinkTime={thinkTime} setThinkTime={setThinkTime}
           complementBase={complementBase} setComplementBase={setComplementBase}
+          timesNValue={timesNValue} setTimesNValue={setTimesNValue}
           isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode}
           speedState={speedState}
           onGenerateClick={generateNumber}
@@ -341,6 +375,7 @@ export default function App() {
             mode={mode}
             speedState={speedState}
             complementBase={complementBase}
+            timesNValue={timesNValue}
             activeCountdown={activeCountdown}
             thinkTime={thinkTime}
             delay={delay}
