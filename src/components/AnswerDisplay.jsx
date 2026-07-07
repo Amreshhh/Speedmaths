@@ -69,17 +69,25 @@ export default function AnswerDisplay({
             )}
           </div>
         ) : (
-          /* HIDDEN STATE (MASKED) */
-          <div className="flex flex-col items-center gap-6 text-zinc-400 dark:text-zinc-600">
+         /* HIDDEN STATE (MASKED) */
+          <div
+            className={`flex-1 flex flex-col items-center justify-center gap-6 text-zinc-400 dark:text-zinc-600 ${(!isRevealed && (mode === 'manual' || mode === 'speed')) ? 'cursor-pointer' : ''}`}
+            onClick={(e) => {
+              if (!isRevealed && (mode === 'manual' || mode === 'speed')) {
+                e.stopPropagation();
+                if (typeof onReveal === 'function') onReveal();
+              }
+            }}
+          >
             <div className="text-[7rem] sm:text-[9rem] font-black opacity-10 dark:opacity-5 select-none tracking-tight">
               ?
             </div>
-            
+
             {mode === 'manual' || mode === 'speed' ? (
               <div className="flex flex-col items-center gap-3">
-                {/* Touch Friendly Reveal Button */}
-                <button 
-                  onClick={onReveal}
+                {/* Touch Friendly Reveal Button (stop propagation to avoid double-call) */}
+                <button
+                  onClick={(e) => { e.stopPropagation(); if (typeof onReveal === 'function') onReveal(); }}
                   className="px-5 sm:px-6 py-2.5 bg-yellow-400 text-black font-bold rounded-2xl border border-yellow-500 active:scale-95 transition-all text-xs sm:text-sm shadow-lg shadow-yellow-400/20 uppercase tracking-wide"
                 >
                   Reveal Answer
