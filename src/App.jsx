@@ -29,6 +29,34 @@ export default function App() {
   const [settingsKeyRight, setSettingsKeyRight] = useState('r');
   const [settingsKeyWrong, setSettingsKeyWrong] = useState('w');
 
+  // PWA install prompt (fires only on browsers/platforms that support it, e.g. Android Chrome)
+  const [installPrompt, setInstallPrompt] = useState(null);
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (event) => {
+      event.preventDefault();
+      setInstallPrompt(event);
+    };
+    const handleAppInstalled = () => setInstallPrompt(null);
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    window.addEventListener('appinstalled', handleAppInstalled);
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener('appinstalled', handleAppInstalled);
+    };
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (installPrompt) {
+      installPrompt.prompt();
+      await installPrompt.userChoice;
+      setInstallPrompt(null);
+    } else {
+      window.open('https://www.youtube.com/shorts/to8PFEoQsqM', '_blank', 'noopener,noreferrer');
+    }
+  };
+
   // Game States
   const [numberOne, setNumberOne] = useState(null);
   const [numberTwo, setNumberTwo] = useState(null);
@@ -305,7 +333,11 @@ export default function App() {
         
         {/* Landing Page Section - Full Height */}
         <div className="w-full min-h-screen">
-          <LandingPage isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
+          <LandingPage
+            isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode}
+            canInstall={!!installPrompt}
+            onInstallClick={handleInstallClick}
+          />
         </div>
 
         {/* Game Section - Full Height */}
