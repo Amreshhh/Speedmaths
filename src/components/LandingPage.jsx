@@ -92,6 +92,9 @@ export default function LandingPage({ isDarkMode, setIsDarkMode, canInstall, onI
                   <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
                     Set number ranges, adjust reveal timing, configure custom key bindings, and track your progress.
                   </p>
+                  <p className="text-xs sm:text-sm text-yellow-600 dark:text-yellow-400 font-medium leading-relaxed mt-2">
+                    Tip: Tables of any number can be practiced using ×n mode by keeping the min max range to 1–10.
+                  </p>
                 </div>
               </div>
             </div>
